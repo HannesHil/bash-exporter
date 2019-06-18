@@ -24,15 +24,13 @@ func (o *Output) RunJob(p *Params) {
 }
 
 func (o *Output) RunExec(path *string) {
-
-	out, err := exec.Command(*path).Output()
+	out, err := exec.Command("/bin/bash", *path).Output()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Exec Error:",err)
 	}
-
 	err = json.Unmarshal(out, &o.Schema)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Json Error:", err, string(out[:]))
 	}
 
 }
